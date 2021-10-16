@@ -1,80 +1,152 @@
-// 1. Write a function identity that takes an argument and returns that argument
-const identity = (x) => x;
-console.log(identity('Hello there!'));
-
-// 2. Write a binary function addb that takes two numbers and returns their sum
-const addb = (x, y) => x + y;
-console.log(addb(3, 7));
-
-// 3. Write a binary function subb that takes two numbers and returns their difference
-const subb = (x, y) => x - y;
-console.log(subb(7, 2));
-
-// 4. Write a binary function mulb that takes two numbers and returns their product
-const mulb = (x, y) => x * y;
-console.log(mulb(2, 5));
-
-// 5. Write a binary function minb that takes two numbers and returns the smaller one
-const minb = (x, y) => x < y ? x : y;
-console.log(minb(7, 3)); 
-
-// 6. Write a binary function maxb that takes two numbers and returns the larger one
-const maxb = (x, y) => x > y ? x : y;
-console.log(maxb(7, 3)); 
-
-// 7. Write a function add that is generalized for any amount of arguments
-function add() {
-    let x = 0;
-    let i = 0;
-
-    for (i ; i < arguments.length; i++) {
-        x += arguments[i];
-    }
+function identity(x) {
     return x;
 }
-console.log(add(1, 2, 4));
 
-// 8. Write a function sub that is generalized for any amount of arguments
-function sub() {
-    let i = 1;
-    let x = arguments[0];
-
-    for (i ; i < arguments.length; i++) {
-        x -= arguments[i];
-    }
-    return x;
+function addb(a, b) {
+    return a + b
 }
-console.log(sub(1, 2, 4));
 
-// 9. Write a function mul that is generalized for any amount of arguments
-function mul() {
-    let x = arguments[0];
-
-    for (let i = 1; i < arguments.length; i++) {
-        x *= arguments[i];
-    }
-    return x;
+function subb(a, b) {
+    return a - b
 }
-console.log(mul(1, 2, 4));
 
-// 10. Write a function min that is generalized for any amount of arguments
-function min() {
-    let min = arguments[0];
-
-    for (let i = 1; i < arguments.length; i++) {
-        min > arguments[i]? min = arguments[i]: min ;
-    }
-    return min;
+function mulb(a, b) {
+    return a * b
 }
-console.log(min(1, 2, 4));
 
-// 11. Write a function max that is generalized for any amount of arguments
-function max() {
-    let max = arguments[0];
-
-    for (let i = 1; i < arguments.length; i++) {
-        max < arguments[i]? max = arguments[i]: max ;
-    }
-    return max;
+function minb(a, b) {
+    return a < b ? a : b
 }
-console.log(max(1, 2, 4));
+
+function maxb(a, b) {
+    return a < b ? b : a
+}
+
+function add(...nums) {
+    let sum = 0
+    for (let i = 0; i < arguments.length; i++) {
+        sum += arguments[i]
+    }
+    return sum
+}
+
+function sub(...nums) {
+    let diff;
+    for (let i = 0; i < arguments.length; i++) {
+        if (i == 0) {
+            diff = arguments[i]
+            continue
+        }
+        diff = diff - arguments[i]
+    }
+    return diff
+}
+
+function mul(...nums) {
+    let product = 1;
+    for (let i = 0; i < arguments.length; i++) {
+        product *= arguments[i]
+    }
+    return product
+}
+
+function min(...nums) {
+    let min;
+    for (let i = 0; i < arguments.length; i++) {
+        if (i == 0) min = arguments[i];
+        min = arguments[i] < min ? arguments[i] : min
+    }
+    return min
+}
+
+function max(...nums) {
+    let max;
+    for (let i = 0; i < arguments.length; i++) {
+        if (i == 0) max = arguments[i];
+        max = arguments[i] > max ? arguments[i] : max
+    }
+    return max
+}
+
+function addRecurse(...nums) {
+    let sum = 0;
+    let count = 0;
+    let args = arguments
+
+    function add(num) {
+        sum += args[count]
+        if (count <= args.length - 2) {
+            count++;
+            add(args[count])
+        }
+        return sum;
+    };
+    return add(arguments[0]);
+}
+
+function mulRecurse(...nums) {
+    let product = 1;
+    let count = 0;
+    let args = arguments;
+
+    function mul(num) {
+        product *= args[count]
+        if (count <= args.length - 2) {
+            count++;
+            mul(args[count])
+        }
+        return product;
+    }
+    return mul(arguments[0])
+}
+
+function minRecurse(...nums) {
+    let min;
+    let count = 0;
+    let args = arguments;
+
+    function minFunc(num) {
+        if (count == 0) min = args[0]
+        if (args[count] < min) min = args[count]
+        if (count <= args.length - 2) {
+            count++;
+            minFunc(args[count])
+        }
+        return min
+    }
+    return minFunc(args[0])
+}
+
+function maxRecurse(...nums) {
+    let max;
+    let count = 0;
+    let args = arguments;
+
+    function maxFunc(num) {
+        if (count == 0) max = args[0]
+        if (args[count] > max) max = args[count]
+        if (count <= args.length - 2) {
+            count++;
+            maxFunc(args[count])
+        }
+        return max
+    }
+    return maxFunc(args[0])
+}
+
+const not = func => arg => !func(arg)
+
+function acc(func, initial) {
+    return function (...args) {
+        return (function () {
+            
+        })()
+    }
+}
+
+let myadd = acc(addb, 0)
+console.log(myadd(1, 2, 4))
+
+module.exports = { identity, addb, subb, mulb, minb, maxb, add, sub, mul, min, max, addRecurse, mulRecurse, minRecurse, maxRecurse, not };
+
+// addb, subb, mulb, minb, maxb, add, sub, mul, min, max, addRecurse, mulRecurse, minRecurse, maxRecurse, not, acc, accPartial, accRecurse, fill, fillRecurse, set, identityf, addf, liftf, pure, curryb, curry, inc, twiceUnary, doubl, square, twice, reverseb, reverse, composeuTwo, composeu, composeb, composeTwo, compose, limitb, limit, genFrom, genTo, genFromTo, elementGen, element, collect, filter, filterTail, concatTwo, concat, concatTail, gensymf, gensymff, fibonaccif, counter, revocableb, revocable, extract, m, addmTwo, addm, liftmbM, liftmb, liftm, exp, expn, addg, liftg, arrayg, continuizeu, continuize, vector, exploitVector, vectorSafe, pubsub, mapRecurse, filterRecurse, 

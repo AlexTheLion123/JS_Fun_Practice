@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 const expect = require('chai').expect;
-const filename = 'asha_JS_solution';
+const filename = 'mySolutions.js';
 const sol = require('../Solutions/' + filename);
 require('mocha-sinon');
 
@@ -89,7 +89,7 @@ describe("JS_Fun_Practice", function () {
       assert.equal(isEven(2), true);
     });
   });
-  describe("acc(func,initial)", function () {
+  /*describe("acc(func,initial)", function () {
     it(`takes a function and an initial value and returns a function
         that runs the initial function on each argument, accumulating the result`, function () {
       let add = sol.acc(sol.addb, 0);
@@ -637,5 +637,5 @@ describe("JS_Fun_Practice", function () {
         [2, 4]
       );
     });
-  });
+  }); */
 });
