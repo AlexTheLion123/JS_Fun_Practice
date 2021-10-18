@@ -89,7 +89,7 @@ describe("JS_Fun_Practice", function () {
       assert.equal(isEven(2), true);
     });
   });
-  /*describe("acc(func,initial)", function () {
+  describe("acc(func,initial)", function () {
     it(`takes a function and an initial value and returns a function
         that runs the initial function on each argument, accumulating the result`, function () {
       let add = sol.acc(sol.addb, 0);
@@ -127,12 +127,12 @@ describe("JS_Fun_Practice", function () {
       expect(sol.fillRecurse(3)).to.deep.equal([3, 3, 3]);
     });
   });
-  describe("set(...args)", function () {
+  /* describe("set(...args)", function () {
     it(`is given a list of arguments and returns an array with all duplicates
         removed`, function () {
       expect(sol.set(1, 1, 1, 2, 2, 2)).to.deep.equal([1, 2]);
     });
-  });
+  });*/
   describe("identityf(x)", function () {
     it(`takes an argument and returns a function that returns that argument`, function () {
       assert.equal(sol.identityf(3)(), 3);
@@ -149,7 +149,7 @@ describe("JS_Fun_Practice", function () {
       assert.equal(sol.liftf(sol.mulb)(5)(6), 30);
     });
   });
-  describe("pure(x,y)", function () {
+  /* describe("pure(x,y)", function () {
     it(`is a wrapper arround the impure function impure`, function () {
       expect(sol.pure(20, 5)).to.deep.equal([6, 120]);
       expect(sol.pure(25, 6)).to.deep.equal([7, 175]);

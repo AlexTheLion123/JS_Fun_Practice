@@ -137,16 +137,126 @@ function maxRecurse(...nums) {
 const not = func => arg => !func(arg)
 
 function acc(func, initial) {
-    return function (...args) {
-        return (function () {
-            
+    return function (...params) {
+        let accum = initial;
+        count = 0;
+        const args = arguments;
+        return (function doFunc() {
+            if (count <= args.length - 1) {
+                accum = func(accum, args[count])
+                count++;
+                doFunc()
+            }
+            return accum
         })()
     }
 }
 
-let myadd = acc(addb, 0)
-console.log(myadd(1, 2, 4))
+function accPartial(func, start, end) {
+    return function (...randomArgs) {
+        let args = arguments;
+        let count = 0;
+        let accum;
+        let arr = []
+        return (function doFunc() {
+            if (count < start) {
+                arr.push(args[count])
+                count++
+                doFunc()
+            }
+            if (count <= end - 2 && count >= start) {
+                if (count == start) accum = args[start];
+                accum = func(accum, args[count + 1])
+                if (count == end - 2) arr.push(accum)
+                count++;
+                doFunc()
+            }
+            if (count <= args.length - 2) {
+                arr.push(args[count + 1])
+                count++
+                doFunc()
+            }
+            return arr;
+        })()
+    }
+}
 
-module.exports = { identity, addb, subb, mulb, minb, maxb, add, sub, mul, min, max, addRecurse, mulRecurse, minRecurse, maxRecurse, not };
+function accRecurse(func, initial) {
+    return function (...params) {
+        let accum = initial;
+        count = 0;
+        const args = arguments;
+        return (function doFunc() {
+            if (count <= args.length - 1) {
+                accum = func(accum, args[count])
+                count++;
+                doFunc()
+            }
+            return accum
+        })()
+    }
+}
+
+function fill(num) {
+    let arr = []
+    for (let i = 0; i < num; i++) {
+        arr.push(num)
+    }
+    return arr
+}
+
+function fillRecurse(num) {
+    let arr = []
+    let count = 0;
+    return (function recurse() {
+        if (count == num) return;
+        arr.push(num);
+        count++
+        recurse();
+        return arr;
+    })()
+}
+
+function set(...funcArgs) {
+    let arr = []
+    let count = 0;
+    return (function recurse() {
+        for (let i = 0; i < arr.length; i++) {
+
+        }
+    })()
+}//  FIXME
+
+const identityf = (x) => () => x
+
+const addf = a => b => a + b
+
+/* function liftf(binary) {
+    return function(a){
+        return function(b){
+            return binary(a,b)
+        }
+    }
+} */
+
+const liftf = binary => a => b => binary(a, b)
+
+function pure(x, y) {
+    (function impure(x) {
+        y++;
+        z = x * y;
+    }
+    )(x)
+    var y = 5, z;
+
+    return [y, z]
+}
+
+module.exports = {
+    identity, addb, subb, mulb, minb, maxb, add,
+    sub, mul, min, max, addRecurse, mulRecurse,
+    minRecurse, maxRecurse, not, acc, accPartial, accRecurse,
+    fill, fillRecurse, set, identityf, addf, liftf
+};
 
 // addb, subb, mulb, minb, maxb, add, sub, mul, min, max, addRecurse, mulRecurse, minRecurse, maxRecurse, not, acc, accPartial, accRecurse, fill, fillRecurse, set, identityf, addf, liftf, pure, curryb, curry, inc, twiceUnary, doubl, square, twice, reverseb, reverse, composeuTwo, composeu, composeb, composeTwo, compose, limitb, limit, genFrom, genTo, genFromTo, elementGen, element, collect, filter, filterTail, concatTwo, concat, concatTail, gensymf, gensymff, fibonaccif, counter, revocableb, revocable, extract, m, addmTwo, addm, liftmbM, liftmb, liftm, exp, expn, addg, liftg, arrayg, continuizeu, continuize, vector, exploitVector, vectorSafe, pubsub, mapRecurse, filterRecurse, 
